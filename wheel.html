@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Wheel of Fortune</title>
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.pointer {
+  position: absolute;
+  font-size: 24px;
+  transform: translate(-50%, -50%);
+  top: 20%; /* Adjusted to better position the pointer above the wheel */
+  left: 50%; /* Center the pointer horizontally with respect to the page */
+}
+
+#spin {
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<div id="wheel-container">
+    <svg width="300" height="300" viewBox="0 0 300 300">
+        <!-- Circle Border -->
+        <circle cx="150" cy="150" r="145" fill="none" stroke="black" stroke-width="5"/>
+        <!-- Segments -->
+        <path d="M150,150 L295,150 A145,145 0 0,0 150,5 Z" fill="#FFD700"/>
+        <text x="225" y="100" font-size="14" text-anchor="middle" transform="rotate(0,150,150)">$10 Gift Card</text>
+        
+        <path d="M150,150 L150,5 A145,145 0 0,0 5,150 Z" fill="#C0C0C0"/>
+        <text x="75" y="100" font-size="14" text-anchor="middle" transform="rotate(0,150,150)">Free Sandwich</text>
+        
+        <path d="M150,150 L5,150 A145,145 0 0,0 150,295 Z" fill="#CD7F32"/>
+        <text x="75" y="200" font-size="14" text-anchor="middle" transform="rotate(0,150,150)">Free Salad</text>
+        
+        <path d="M150,150 L150,295 A145,145 0 0,0 295,150 Z" fill="#8C7853"/>
+        <text x="225" y="200" font-size="14" text-anchor="middle" transform="rotate(0,150,150)">Free Drink</text>
+    </svg>
+  <div class="pointer">▼</div>
+</div>
+<button id="spin">Spin</button>
+
+<script>
+    document.getElementById('spin').addEventListener('click', function() {
+      const svg = document.querySelector('svg');
+      
+      // Base rotation to align the "$10 Gift Card" segment with the pointer's position
+      const baseRotation = 360 - 45; // Assuming the segment is initially at the top left
+    
+      // Add a wider random offset within the "$10 Gift Card" segment boundaries, for example, -35 to +35 degrees
+      // This simulates the wheel stopping at more varied positions within the segment
+      const offset = Math.floor(Math.random() * 71) - 35; // Random offset between -35 and +35 degrees
+    
+      // Calculate full rotations for variability
+      const fullRotations = 360 * (Math.floor(Math.random() * 5) + 3); // Between 3 and 7 full rotations
+    
+      // Total rotation includes the base rotation, full rotations, and the random offset
+      const totalRotation = baseRotation + fullRotations + offset;
+      
+      svg.style.transition = 'transform 4s ease-out';
+      svg.style.transform = `rotate(${totalRotation}deg)`;
+    });
+    </script>
+    
+    
+    
+</body>
+</html>
